@@ -1,6 +1,6 @@
 "use strict";
 // Step1
-// コールバック地獄
+コールバック地獄
 setTimeout(function () {
        console.log('2000ms秒経過');
        setTimeout(function () {
@@ -74,3 +74,28 @@ getNumber(3).then(function (result) {
        // 3未満の場合はrejectが呼び出され、"Falied!"のメッセージが表示される
        console.log(err);
 });
+
+
+// Step4 async　awaitを利用
+// https://rightcode.co.jp/blog/information-technology/javascript-async-await
+const promiseFunc = value => {
+       return new Promise((resolve, reject) => {
+              setTimeout(() => {
+                     resolve(value * 2);
+              }, 1000);
+       });
+};
+
+// 非同期関数
+async function asyncFunc() {
+       // 並行して処理が実行され、全ての処理が終わるまで待機
+       const values = await Promise.all([
+              promiseFunc(1),
+              promiseFunc(2),
+              promiseFunc(3)
+       ]);
+
+       console.log(values);
+}
+
+asyncFunc();
